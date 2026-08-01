@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chatpata Junction — Freshly Made. Full of Flavour.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600;700&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#130f0c;
+    --panel:#1d1712;
+    --panel-2:#241c15;
+    --gold:#dba445;
+    --gold-deep:#b97e22;
+    --cream:#f6ecd9;
+    --chili:#b8442f;
+    --herb:#6f8a54;
+    --line: rgba(219,164,69,0.28);
+    --shadow: 0 20px 50px rgba(0,0,0,0.5);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(ellipse at 15% 0%, rgba(219,164,69,0.07), transparent 45%),
+      radial-gradient(ellipse at 85% 20%, rgba(184,68,47,0.06), transparent 40%),
+      var(--black);
+    color:var(--cream);
+    font-family:'Poppins', sans-serif;
+    overflow-x:hidden;
+  }
+
+  ::selection{ background:var(--gold); color:var(--black); }
+
+  a{color:inherit; text-decoration:none;}
+
+  /* ---------- texture overlay ---------- */
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:999; opacity:0.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:60;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 6vw;
+    background:rgba(19,15,12,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Anton'; letter-spacing:0.03em;}
+  .brand .dot{ width:8px; height:8px; border-radius:50%; background:var(--gold); box-shadow:0 0 12px var(--gold);}
+  .brand span{ font-size:1.15rem; }
+  .brand .hl{ color:var(--gold); }
+
+  nav.links{ display:flex; gap:28px; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.08em; }
+  nav.links a{ position:relative; padding-bottom:4px; opacity:0.85; transition:opacity .2s; }
+  nav.links a:hover{ opacity:1; }
+  nav.links a::after{
+    content:''; position:absolute; left:0; bottom:0; width:0%; height:1px; background:var(--gold); transition:width .25s ease;
+  }
+  nav.links a:hover::after{ width:100%; }
+
+  .cart-btn{
+    display:flex; align-items:center; gap:8px;
+    background:var(--gold); color:var(--black); font-weight:700; font-size:0.85rem;
+    padding:9px 16px; border-radius:999px; border:none; cursor:pointer;
+    letter-spacing:0.03em;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .cart-btn:hover{ transform:translateY(-2px); box-shadow:0 8px 18px rgba(219,164,69,0.35); }
+  .cart-count{
+    background:var(--black); color:var(--gold); border-radius:50%;
+    width:20px; height:20px; display:flex; align-items:center; justify-content:center;
+    font-size:0.72rem; font-family:'JetBrains Mono';
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:9vh 6vw 12vh;
+    text-align:center;
+    display:flex; flex-direction:column; align-items:center;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .hero::before, .hero::after{
+    content:''; position:absolute; top:24px; width:180px; height:180px;
+    border:1px solid var(--line); border-radius:50%; opacity:0.5;
+  }
+  .hero::before{ left:-60px; }
+  .hero::after{ right:-60px; }
+
+  .toran{
+    display:flex; gap:10px; margin-bottom:18px; opacity:0.85;
+  }
+  .toran span{ font-size:1.4rem; animation:sway 3s ease-in-out infinite; display:inline-block; }
+  .toran span:nth-child(odd){ animation-delay:-1.4s; }
+
+  @keyframes sway{ 0%,100%{ transform:rotate(-6deg);} 50%{ transform:rotate(6deg);} }
+
+  .eyebrow{
+    font-family:'Caveat'; font-size:1.4rem; color:var(--gold); margin-bottom:6px;
+  }
+  h1.title{
+    font-family:'Anton';
+    font-size:clamp(2.8rem, 9vw, 6.2rem);
+    line-height:0.95;
+    letter-spacing:0.01em;
+    color:var(--cream);
+    text-shadow:0 2px 0 rgba(0,0,0,0.4);
+  }
+  h1.title .gold-line{ color:var(--gold); display:block; }
+
+  .tagline{
+    margin-top:22px;
+    font-size:1.05rem;
+    display:flex; align-items:center; gap:14px;
+    color:rgba(246,236,217,0.85);
+    letter-spacing:0.02em;
+  }
+  .tagline .sep{ width:5px; height:5px; background:var(--gold); border-radius:50%; }
+
+  .hero-cta{
+    margin-top:40px; display:flex; gap:16px; flex-wrap:wrap; justify-content:center;
+  }
+  .btn-primary, .btn-ghost{
+    padding:14px 30px; border-radius:999px; font-weight:600; font-size:0.95rem;
+    cursor:pointer; letter-spacing:0.02em; transition:all .25s ease;
+  }
+  .btn-primary{
+    background:var(--gold); color:var(--black); border:1px solid var(--gold);
+  }
+  .btn-primary:hover{ background:var(--gold-deep); transform:translateY(-2px); box-shadow:0 10px 24px rgba(219,164,69,0.3); }
+  .btn-ghost{
+    background:transparent; color:var(--cream); border:1px solid var(--line);
+  }
+  .btn-ghost:hover{ border-color:var(--gold); color:var(--gold); }
+
+  /* ---------- menu badge ---------- */
+  .section-head{
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    padding:80px 6vw 30px;
+  }
+  .ribbon{
+    background:var(--gold); color:var(--black); font-family:'Anton'; letter-spacing:0.08em;
+    font-size:0.95rem; padding:10px 30px; position:relative;
+    clip-path:polygon(3% 0, 97% 0, 100% 50%, 97% 100%, 3% 100%, 0% 50%);
+  }
+  .section-head p{ margin-top:16px; color:rgba(246,236,217,0.65); max-width:460px; font-size:0.95rem; }
+
+  /* ---------- menu grid ---------- */
+  .menu{
+    display:grid; gap:22px;
+    padding:20px 6vw 100px;
+    max-width:1100px; margin:0 auto;
+    grid-template-columns:repeat(2, 1fr);
+  }
+  @media (max-width:820px){ .menu{ grid-template-columns:1fr; } }
+
+  .item-card{
+    background:linear-gradient(180deg, var(--panel), var(--panel-2));
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px;
+    display:flex; gap:18px;
+    position:relative;
+    overflow:hidden;
+    opacity:0; transform:translateY(24px);
+    transition:opacity .6s ease, transform .6s ease, border-color .3s;
+  }
+  .item-card.visible{ opacity:1; transform:translateY(0); }
+  .item-card:hover{ border-color:var(--gold); }
+  .item-card::before{
+    content:''; position:absolute; inset:0; opacity:0; pointer-events:none;
+    background:radial-gradient(circle at 100% 0%, rgba(219,164,69,0.12), transparent 55%);
+    transition:opacity .3s ease;
+  }
+  .item-card:hover::before{ opacity:1; }
+
+  .icon-plate{
+    flex:0 0 auto; width:78px; height:78px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, rgba(219,164,69,0.18), transparent 60%), var(--black);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .icon-plate svg{ width:44px; height:44px; }
+
+  .item-body{ flex:1; display:flex; flex-direction:column; gap:6px; }
+  .item-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .item-name{ font-family:'Anton'; font-size:1.15rem; letter-spacing:0.01em; color:var(--cream); }
+  .item-pieces{ font-family:'JetBrains Mono'; color:var(--gold); font-size:0.72rem; letter-spacing:0.04em; margin-top:2px; }
+  .item-desc{ font-size:0.85rem; color:rgba(246,236,217,0.68); line-height:1.5; margin-top:2px; }
+
+  .price-coin{
+    flex:0 0 auto;
+    width:54px; height:54px; border-radius:50%;
+    border:1.5px dashed var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono'; font-weight:700; color:var(--gold); font-size:0.85rem;
+    background:rgba(219,164,69,0.06);
+  }
+
+  .item-footer{
+    display:flex; align-items:center; justify-content:space-between; margin-top:10px;
+  }
+  .stepper{
+    display:flex; align-items:center; gap:10px;
+    background:var(--black); border:1px solid var(--line); border-radius:999px; padding:5px 8px;
+  }
+  .stepper button{
+    width:24px; height:24px; border-radius:50%; border:none; background:var(--panel-2);
+    color:var(--gold); font-size:1rem; cursor:pointer; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .2s;
+  }
+  .stepper button:hover{ background:var(--gold); color:var(--black); }
+  .stepper .qty{ font-family:'JetBrains Mono'; min-width:16px; text-align:center; font-size:0.85rem; }
+
+  .add-btn{
+    background:transparent; border:1px solid var(--gold); color:var(--gold);
+    padding:8px 16px; border-radius:999px; font-size:0.78rem; font-weight:600;
+    cursor:pointer; letter-spacing:0.03em; transition:all .2s ease;
+  }
+  .add-btn:hover{ background:var(--gold); color:var(--black); }
+  .add-btn.added{ background:var(--herb); border-color:var(--herb); color:var(--cream); }
+
+  /* ---------- cart drawer (styled like a torn vendor chit) ---------- */
+  .overlay{
+    position:fixed; inset:0; background:rgba(10,8,6,0.55); backdrop-filter:blur(2px);
+    opacity:0; pointer-events:none; transition:opacity .3s ease; z-index:70;
+  }
+  .overlay.open{ opacity:1; pointer-events:auto; }
+
+  .chit{
+    position:fixed; top:0; right:-380px; width:360px; max-width:88vw; height:100%;
+    background:var(--cream); color:#241c15;
+    z-index:80;
+    transition:right .35s cubic-bezier(.65,0,.35,1);
+    display:flex; flex-direction:column;
+    box-shadow:-30px 0 60px rgba(0,0,0,0.5);
+  }
+  .chit.open{ right:0; }
+  .chit-top{
+    padding:26px 24px 16px;
+    border-bottom:2px dashed #cbb98a;
+    position:relative;
+  }
+  .chit-top h3{ font-family:'Anton'; font-size:1.3rem; letter-spacing:0.02em; }
+  .chit-top .sub{ font-family:'Caveat'; font-size:1.1rem; color:var(--gold-deep); }
+  .chit-close{
+    position:absolute; top:20px; right:20px; background:none; border:none; font-size:1.3rem; cursor:pointer; color:#241c15;
+  }
+
+  .chit-body{ flex:1; overflow-y:auto; padding:14px 24px; }
+  .chit-line{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:12px 0; border-bottom:1px dotted #cbb98a; font-size:0.88rem;
+    gap:10px;
+  }
+  .chit-line .name{ font-weight:600; }
+  .chit-line .meta{ font-family:'JetBrains Mono'; font-size:0.75rem; color:#7a6a4a; }
+  .chit-line .amt{ font-family:'JetBrains Mono'; font-weight:700; }
+  .chit-empty{ padding:40px 0; text-align:center; color:#8a7a58; font-size:0.9rem; }
+
+  .chit-remove{ background:none; border:none; color:var(--chili); font-size:0.75rem; cursor:pointer; text-decoration:underline; }
+
+  .chit-bottom{
+    padding:20px 24px 26px; border-top:2px dashed #cbb98a;
+    background:#efe4c8;
+  }
+  .chit-total{ display:flex; justify-content:space-between; font-family:'Anton'; font-size:1.15rem; margin-bottom:14px;}
+  .chit-total .amt{ color:var(--gold-deep); }
+  .whatsapp-btn{
+    width:100%; background:#1f8a4c; color:#fff; border:none; padding:14px; border-radius:10px;
+    font-weight:700; font-size:0.95rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px;
+    transition:filter .2s;
+  }
+  .whatsapp-btn:hover{ filter:brightness(1.08); }
+  .whatsapp-btn:disabled{ opacity:0.45; cursor:not-allowed; }
+  .chit-note{ font-size:0.72rem; color:#8a7a58; text-align:center; margin-top:10px; }
+
+  /* ---------- about strip ---------- */
+  .strip{
+    padding:70px 6vw; text-align:center;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    background:var(--panel);
+  }
+  .strip h2{ font-family:'Anton'; font-size:clamp(1.6rem,4vw,2.4rem); margin-bottom:14px; }
+  .strip p{ max-width:560px; margin:0 auto; color:rgba(246,236,217,0.7); font-size:0.95rem; line-height:1.7; }
+  .strip .marks{ display:flex; justify-content:center; gap:34px; margin-top:32px; flex-wrap:wrap; }
+  .mark{ display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .mark .ic{ font-size:1.6rem; }
+  .mark span{ font-size:0.78rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--gold); }
+
+  /* ---------- footer ---------- */
+  footer{ padding:70px 6vw 40px; text-align:center; }
+  footer .thanks{ font-family:'Caveat'; font-size:2.6rem; color:var(--gold); }
+  footer .sub{ margin-top:6px; letter-spacing:0.14em; font-size:0.8rem; text-transform:uppercase; color:rgba(246,236,217,0.6); }
+  footer .fine{ margin-top:30px; font-size:0.75rem; color:rgba(246,236,217,0.35); }
+
+  /* scrollbar for chit */
+  .chit-body::-webkit-scrollbar{ width:6px; }
+  .chit-body::-webkit-scrollbar-thumb{ background:#cbb98a; border-radius:4px; }
+
+  @media (max-width:640px){
+    nav.links{ display:none; }
+    .hero{ padding-top:6vh; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header>
+  <div class="brand">
+    <span class="dot"></span>
+    <span>CHATPATA <span class="hl">JUNCTION</span></span>
+  </div>
+  <nav class="links">
+    <a href="#menu">Menu</a>
+    <a href="#about">About</a>
+    <a href="#order">Order</a>
+  </nav>
+  <button class="cart-btn" id="cartOpenBtn">
+    🧾 Cart <span class="cart-count" id="cartCount">0</span>
+  </button>
+</header>
+
+<section class="hero">
+  <div class="toran"><span>🌶️</span><span>🍃</span><span>🌶️</span><span>🍃</span><span>🌶️</span></div>
+  <div class="eyebrow">street food, done right</div>
+  <h1 class="title">CHATPATA<span class="gold-line">JUNCTION</span></h1>
+  <div class="tagline">Freshly Made <span class="sep"></span> Full of Flavour</div>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">View the menu</button>
+    <button class="btn-ghost" id="heroOrderBtn">Start an order</button>
+  </div>
+</section>
+
+<div class="section-head" id="menu">
+  <div class="ribbon">✦ OUR MENU ✦</div>
+  <p>Five plates, made fresh to order at the junction. Tap a card to build your plate — send it straight to us on WhatsApp.</p>
+</div>
+
+<div class="menu" id="menuGrid"></div>
+
+<section class="strip" id="about">
+  <h2>What keeps the queue coming back</h2>
+  <p>Every batch is made fresh through the day — no pre-frying, no standing chutneys. Just crisp puris, hot kachori, and chutneys made in-house every morning.</p>
+  <div class="marks">
+    <div class="mark"><div class="ic">🔥</div><span>Made to order</span></div>
+    <div class="mark"><div class="ic">🌿</div><span>Fresh chutneys daily</span></div>
+    <div class="mark"><div class="ic">₹</div><span>Honest pricing</span></div>
+  </div>
+</section>
+
+<footer id="order">
+  <div class="thanks">Thank You!</div>
+  <div class="sub">Enjoy your meal</div>
+  <button class="btn-primary" style="margin-top:26px;" onclick="openCart()">Open your cart</button>
+  <div class="fine">Chatpata Junction · Freshly Made, Full of Flavour</div>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="chit" id="chit">
+  <div class="chit-top">
+    <h3>Your Order</h3>
+    <div class="sub">chit no. #CJ-<span id="orderNo">0001</span></div>
+    <button class="chit-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="chit-body" id="chitBody"></div>
+  <div class="chit-bottom">
+    <div class="chit-total"><span>Total</span><span class="amt" id="chitTotal">₹0</span></div>
+    <button class="whatsapp-btn" id="waBtn" disabled onclick="orderOnWhatsapp()">
+      📲 Order on WhatsApp
+    </button>
+    <div class="chit-note">Opens WhatsApp with your order pre-filled. Nothing is charged here.</div>
+  </div>
+</div>
+
+<script>
+  const MENU = [
+    {
+      id:'panipuri', name:'Pani Puri', pieces:'6 Pieces', price:20,
+      desc:'Crispy puris filled with flavourful pani and tangy chutney.',
+      icon:`<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="34" r="14" stroke="#dba445" stroke-width="2"/>
+        <path d="M20 34c0-6.6 5.4-12 12-12s12 5.4 12 12" stroke="#dba445" stroke-width="1.4" stroke-dasharray="2 3"/>
+        <circle cx="32" cy="20" r="3" fill="#6f8a54"/>
+        <path d="M14 46h36" stroke="#dba445" stroke-width="2" stroke-linecap="round"/>
+      </svg>`
+    },
+    {
+      id:'kachori', name:'Kachori', pieces:'2 Pieces', price:60,
+      desc:'Crispy, tangy and spicy kachori topped with yogurt and chutneys.',
+      icon:`<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="32" cy="30" rx="15" ry="11" stroke="#dba445" stroke-width="2"/>
+        <path d="M20 30q12 -8 24 0" stroke="#f6ecd9" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="26" cy="27" r="1.6" fill="#b8442f"/>
+        <circle cx="34" cy="24" r="1.6" fill="#b8442f"/>
+        <circle cx="39" cy="29" r="1.6" fill="#b8442f"/>
+        <path d="M14 46h36" stroke="#dba445" stroke-width="2" stroke-linecap="round"/>
+      </svg>`
+    },
+    {
+      id:'moneko', name:'Moneko Bites', pieces:'', price:60,
+      desc:'Crispy, crunchy biscuit bites with a burst of delicious flavours.',
+      icon:`<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="30" r="9" stroke="#dba445" stroke-width="2"/>
+        <circle cx="40" cy="30" r="9" stroke="#dba445" stroke-width="2"/>
+        <path d="M18 27q6 -5 12 0" stroke="#f6ecd9" stroke-width="1.6"/>
+        <path d="M34 27q6 -5 12 0" stroke="#f6ecd9" stroke-width="1.6"/>
+        <path d="M14 46h36" stroke="#dba445" stroke-width="2" stroke-linecap="round"/>
+      </svg>`
+    },
+    {
+      id:'chanchaur', name:'Chanchaur Chaat', pieces:'', price:40,
+      desc:'Crispy, tangy and spicy mix of chanachur with fresh veggies.',
+      icon:`<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 36c0-2 1-3 3-3s2 -3 4-3 3 2 5 1 3-3 6-2 4 3 6 1 3-2 5-1 3 3 3 5" stroke="#dba445" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="20" cy="34" r="1.6" fill="#6f8a54"/>
+        <circle cx="30" cy="30" r="1.6" fill="#b8442f"/>
+        <circle cx="40" cy="33" r="1.6" fill="#6f8a54"/>
+        <path d="M14 46h36" stroke="#dba445" stroke-width="2" stroke-linecap="round"/>
+      </svg>`
+    },
+    {
+      id:'khajur', name:'Khajur Balls', pieces:'5 Pieces', price:100,
+      desc:'5 pieces of healthy sweet bites.',
+      icon:`<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="26" r="7" stroke="#dba445" stroke-width="2"/>
+        <circle cx="40" cy="26" r="7" stroke="#dba445" stroke-width="2"/>
+        <circle cx="32" cy="38" r="7" stroke="#dba445" stroke-width="2"/>
+        <circle cx="24" cy="26" r="1.4" fill="#f6ecd9"/>
+        <circle cx="40" cy="26" r="1.4" fill="#f6ecd9"/>
+        <circle cx="32" cy="38" r="1.4" fill="#f6ecd9"/>
+      </svg>`
+    },
+  ];
+
+  const state = {}; // id -> qty
+  MENU.forEach(m => state[m.id] = 0);
+
+  const menuGrid = document.getElementById('menuGrid');
+
+  function renderMenu(){
+    menuGrid.innerHTML = MENU.map(item => `
+      <div class="item-card" data-id="${item.id}">
+        <div class="icon-plate">${item.icon}</div>
+        <div class="item-body">
+          <div class="item-top">
+            <div>
+              <div class="item-name">${item.name}</div>
+              ${item.pieces ? `<div class="item-pieces">${item.pieces}</div>` : ''}
+            </div>
+            <div class="price-coin">₹${item.price}</div>
+          </div>
+          <div class="item-desc">${item.desc}</div>
+          <div class="item-footer">
+            <div class="stepper" id="stepper-${item.id}" style="${state[item.id] > 0 ? '' : 'visibility:hidden;'}">
+              <button onclick="changeQty('${item.id}', -1)">−</button>
+              <span class="qty" id="qty-${item.id}">${state[item.id]}</span>
+              <button onclick="changeQty('${item.id}', 1)">+</button>
+            </div>
+            <button class="add-btn" id="add-${item.id}" onclick="addToCart('${item.id}')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Add straight to cart with one click, then reveal the on-card stepper
+  // so the same card's +/- keeps adjusting that item's quantity live.
+  function addToCart(id){
+    state[id] += 1;
+    syncCardControls(id);
+    flashAdd(id);
+    renderCart();
+    pulseCartButton();
+  }
+
+  function changeQty(id, delta){
+    state[id] = Math.max(0, state[id] + delta);
+    syncCardControls(id);
+    renderCart();
+    pulseCartButton();
+  }
+
+  function syncCardControls(id){
+    const qtyEl = document.getElementById(`qty-${id}`);
+    const stepperEl = document.getElementById(`stepper-${id}`);
+    const addBtn = document.getElementById(`add-${id}`);
+    qtyEl.textContent = state[id];
+    stepperEl.style.visibility = state[id] > 0 ? 'visible' : 'hidden';
+    addBtn.textContent = state[id] > 0 ? 'Add another' : 'Add to Cart';
+  }
+
+  function flashAdd(id){
+    const btn = document.getElementById(`add-${id}`);
+    btn.classList.add('added');
+    setTimeout(()=> btn.classList.remove('added'), 500);
+  }
+
+  function pulseCartButton(){
+    const btn = document.getElementById('cartOpenBtn');
+    btn.style.transform = 'scale(1.08)';
+    setTimeout(()=> btn.style.transform = 'scale(1)', 180);
+  }
+
+  function removeFromCart(id){
+    state[id] = 0;
+    syncCardControls(id);
+    renderCart();
+  }
+
+  const cartCountEl = document.getElementById('cartCount');
+  const chitBody = document.getElementById('chitBody');
+  const chitTotal = document.getElementById('chitTotal');
+  const waBtn = document.getElementById('waBtn');
+
+  function renderCart(){
+    const items = MENU.filter(m => state[m.id] > 0);
+    const totalItems = items.reduce((s,m)=> s + state[m.id], 0);
+    const totalPrice = items.reduce((s,m)=> s + state[m.id]*m.price, 0);
+
+    cartCountEl.textContent = totalItems;
+    chitTotal.textContent = `₹${totalPrice}`;
+    waBtn.disabled = totalItems === 0;
+
+    if(items.length === 0){
+      chitBody.innerHTML = `<div class="chit-empty">Your chit is empty.<br>Add something chatpata from the menu.</div>`;
+      return;
+    }
+
+    chitBody.innerHTML = items.map(m => `
+      <div class="chit-line">
+        <div>
+          <div class="name">${m.name}</div>
+          <div class="meta">${state[m.id]} × ₹${m.price}</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="amt">₹${state[m.id]*m.price}</div>
+          <button class="chit-remove" onclick="removeFromCart('${m.id}')">remove</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function orderOnWhatsapp(){
+    const items = MENU.filter(m => state[m.id] > 0);
+    if(items.length === 0) return;
+    const totalPrice = items.reduce((s,m)=> s + state[m.id]*m.price, 0);
+    const orderNo = document.getElementById('orderNo').textContent;
+    let lines = [];
+    lines.push("🧾 *CHATPATA JUNCTION*");
+    lines.push(`Chit no. #CJ-${orderNo}`);
+    lines.push("------------------------------");
+    items.forEach(m => {
+      lines.push(`${m.name}  x${state[m.id]}  —  ₹${m.price*state[m.id]}`);
+    });
+    lines.push("------------------------------");
+    lines.push(`*Total: ₹${totalPrice}*`);
+    lines.push("");
+    lines.push("Please confirm my order 🙏");
+
+    const msg = encodeURIComponent(lines.join("\n"));
+    const phone = "919510230798";
+    window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+  }
+
+  const overlay = document.getElementById('overlay');
+  const chit = document.getElementById('chit');
+
+  function openCart(){
+    overlay.classList.add('open');
+    chit.classList.add('open');
+  }
+  function closeCart(){
+    overlay.classList.remove('open');
+    chit.classList.remove('open');
+  }
+
+  document.getElementById('cartOpenBtn').addEventListener('click', openCart);
+  document.getElementById('heroOrderBtn').addEventListener('click', () => {
+    document.getElementById('menu').scrollIntoView({behavior:'smooth'});
+  });
+
+  document.getElementById('orderNo').textContent = String(Math.floor(1000 + Math.random()*8999));
+
+  renderMenu();
+  renderCart();
+
+  // scroll reveal for cards
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  document.querySelectorAll('.item-card').forEach(c=> obs.observe(c));
+</script>
+
+</body>
+</html>
