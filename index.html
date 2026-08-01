@@ -228,60 +228,88 @@
   .add-btn:hover{ background:var(--gold); color:var(--black); }
   .add-btn.added{ background:var(--herb); border-color:var(--herb); color:var(--cream); }
 
-  /* ---------- cart drawer (styled like a torn vendor chit) ---------- */
+  /* ---------- Premium Cart ---------- */
   .overlay{
-    position:fixed; inset:0; background:rgba(10,8,6,0.55); backdrop-filter:blur(2px);
-    opacity:0; pointer-events:none; transition:opacity .3s ease; z-index:70;
+    position:fixed;inset:0;background:rgba(0,0,0,.72);
+    backdrop-filter:blur(10px);
+    opacity:0;pointer-events:none;transition:.35s;z-index:70;
   }
-  .overlay.open{ opacity:1; pointer-events:auto; }
+  .overlay.open{opacity:1;pointer-events:auto;}
 
   .chit{
-    position:fixed; top:0; right:-380px; width:360px; max-width:88vw; height:100%;
-    background:var(--cream); color:#241c15;
-    z-index:80;
-    transition:right .35s cubic-bezier(.65,0,.35,1);
-    display:flex; flex-direction:column;
-    box-shadow:-30px 0 60px rgba(0,0,0,0.5);
+    position:fixed;top:0;right:-430px;width:420px;max-width:95vw;height:100%;
+    background:linear-gradient(180deg,#1d1712,#120e0b);
+    color:#f6ecd9;border-left:1px solid rgba(219,164,69,.35);
+    box-shadow:-20px 0 60px rgba(0,0,0,.65);
+    transition:right .35s ease;display:flex;flex-direction:column;z-index:80;
   }
-  .chit.open{ right:0; }
+  .chit.open{right:0;}
   .chit-top{
-    padding:26px 24px 16px;
-    border-bottom:2px dashed #cbb98a;
-    position:relative;
+    padding:28px;
+    background:linear-gradient(135deg,#2b2018,#1b140f);
+    border-bottom:1px solid rgba(219,164,69,.2);
   }
-  .chit-top h3{ font-family:'Anton'; font-size:1.3rem; letter-spacing:0.02em; }
-  .chit-top .sub{ font-family:'Caveat'; font-size:1.1rem; color:var(--gold-deep); }
+  .chit-top h3{font-family:'Anton';font-size:1.7rem;color:#dba445}
+  .chit-top .sub{color:#d9c28a}
   .chit-close{
-    position:absolute; top:20px; right:20px; background:none; border:none; font-size:1.3rem; cursor:pointer; color:#241c15;
+    position:absolute;right:20px;top:18px;width:42px;height:42px;
+    border-radius:50%;border:none;background:#2a2119;color:#dba445;
+    cursor:pointer;font-size:18px;
   }
-
-  .chit-body{ flex:1; overflow-y:auto; padding:14px 24px; }
+  .customer-form{
+    background:#221a14;border:1px solid rgba(219,164,69,.2);
+    border-radius:18px;padding:18px;margin:18px;
+  }
+  .customer-form input[type=text]{
+    width:100%;padding:12px 14px;border-radius:12px;
+    border:1px solid rgba(219,164,69,.25);
+    background:#16110d;color:#fff;
+  }
+  .payment-options{display:flex;gap:12px;margin-top:10px}
+  .payment-options label{
+    flex:1;background:#18120d;border:1px solid rgba(219,164,69,.2);
+    border-radius:12px;padding:12px;text-align:center;cursor:pointer;
+  }
+  .chit-body{flex:1;padding:0 18px 18px;overflow:auto}
   .chit-line{
-    display:flex; justify-content:space-between; align-items:center;
-    padding:12px 0; border-bottom:1px dotted #cbb98a; font-size:0.88rem;
-    gap:10px;
+    background:#231b15;border:1px solid rgba(219,164,69,.18);
+    border-radius:16px;padding:14px 16px;margin-bottom:12px;
+    display:flex;justify-content:space-between;align-items:center;
   }
-  .chit-line .name{ font-weight:600; }
-  .chit-line .meta{ font-family:'JetBrains Mono'; font-size:0.75rem; color:#7a6a4a; }
-  .chit-line .amt{ font-family:'JetBrains Mono'; font-weight:700; }
-  .chit-empty{ padding:40px 0; text-align:center; color:#8a7a58; font-size:0.9rem; }
-
-  .chit-remove{ background:none; border:none; color:var(--chili); font-size:0.75rem; cursor:pointer; text-decoration:underline; }
-
+  .name{font-weight:700}
+  .meta{color:#d6b978;font-size:.78rem}
+  .amt{color:#ffd36a;font-weight:700}
+  .chit-remove{
+    background:#3a1717;color:#ff8d8d;border:none;
+    padding:6px 10px;border-radius:8px;cursor:pointer;text-decoration:none;
+  }
   .chit-bottom{
-    padding:20px 24px 26px; border-top:2px dashed #cbb98a;
-    background:#efe4c8;
+    background:#18120d;border-top:1px solid rgba(219,164,69,.2);
+    padding:20px;
   }
-  .chit-total{ display:flex; justify-content:space-between; font-family:'Anton'; font-size:1.15rem; margin-bottom:14px;}
-  .chit-total .amt{ color:var(--gold-deep); }
+  .chit-total{
+    display:flex;justify-content:space-between;
+    font-size:1.4rem;font-family:'Anton';
+    margin-bottom:18px;color:#fff;
+  }
+  .chit-total .amt{color:#ffd36a}
   .whatsapp-btn{
-    width:100%; background:#1f8a4c; color:#fff; border:none; padding:14px; border-radius:10px;
-    font-weight:700; font-size:0.95rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px;
-    transition:filter .2s;
+    width:100%;padding:16px;border:none;border-radius:16px;
+    background:linear-gradient(135deg,#25D366,#0d9b49);
+    color:#fff;font-weight:700;font-size:1rem;cursor:pointer;
+    box-shadow:0 10px 30px rgba(37,211,102,.3);
   }
-  .whatsapp-btn:hover{ filter:brightness(1.08); }
-  .whatsapp-btn:disabled{ opacity:0.45; cursor:not-allowed; }
-  .chit-note{ font-size:0.72rem; color:#8a7a58; text-align:center; margin-top:10px; }
+  .whatsapp-btn:hover{transform:translateY(-2px)}
+  .chit-empty{
+    text-align:center;padding:80px 20px;color:#c6b48f;
+    border:2px dashed rgba(219,164,69,.25);
+    border-radius:18px;margin-top:18px;
+  }
+  .chit-body::-webkit-scrollbar{width:7px}
+  .chit-body::-webkit-scrollbar-thumb{
+    background:#dba445;border-radius:8px;
+  }
+
 
   /* ---------- about strip ---------- */
   .strip{
@@ -310,6 +338,12 @@
     nav.links{ display:none; }
     .hero{ padding-top:6vh; }
   }
+
+.customer-form{margin:16px 0}
+.customer-form label{display:block;font-weight:600;margin:8px 0 6px}
+.customer-form input[type=text]{width:100%;padding:10px;border:1px solid #cbb98a;border-radius:8px;background:#fff}
+.payment-options{display:flex;gap:20px;margin-top:6px}
+
 </style>
 </head>
 <body>
@@ -373,9 +407,23 @@
     <div class="sub">chit no. #CJ-<span id="orderNo">0001</span></div>
     <button class="chit-close" onclick="closeCart()">✕</button>
   </div>
-  <div class="chit-body" id="chitBody"></div>
   <div class="chit-bottom">
+
+    <div class="customer-form">
+      <label>Customer Name</label>
+      <input type="text" id="customerName" placeholder="Enter your name">
+
+      <label>Payment Method</label>
+      <div class="payment-options">
+        <label><input type="radio" name="payment" value="Cash"> Cash</label>
+        <label><input type="radio" name="payment" value="UPI"> UPI</label>
+      </div>
+    </div>
+
+    <div class="chit-body" id="chitBody"></div>
+
     <div class="chit-total"><span>Total</span><span class="amt" id="chitTotal">₹0</span></div>
+
     <button class="whatsapp-btn" id="waBtn" disabled onclick="orderOnWhatsapp()">
       📲 Order on WhatsApp
     </button>
@@ -554,23 +602,41 @@
   function orderOnWhatsapp(){
     const items = MENU.filter(m => state[m.id] > 0);
     if(items.length === 0) return;
+
+    const customerName=document.getElementById('customerName').value.trim();
+    const payment=document.querySelector('input[name="payment"]:checked');
+
+    if(customerName===""){
+      alert("Please enter customer name.");
+      return;
+    }
+    if(!payment){
+      alert("Please select payment method.");
+      return;
+    }
+
     const totalPrice = items.reduce((s,m)=> s + state[m.id]*m.price, 0);
     const orderNo = document.getElementById('orderNo').textContent;
-    let lines = [];
+
+    let lines=[];
     lines.push("🧾 *CHATPATA JUNCTION*");
     lines.push(`Chit no. #CJ-${orderNo}`);
+    lines.push(`Customer : ${customerName}`);
+    lines.push(`Payment : ${payment.value}`);
     lines.push("------------------------------");
-    items.forEach(m => {
+
+    items.forEach(m=>{
       lines.push(`${m.name}  x${state[m.id]}  —  ₹${m.price*state[m.id]}`);
     });
+
     lines.push("------------------------------");
     lines.push(`*Total: ₹${totalPrice}*`);
     lines.push("");
     lines.push("Please confirm my order 🙏");
 
-    const msg = encodeURIComponent(lines.join("\n"));
-    const phone = "919510230798";
-    window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+    const msg=encodeURIComponent(lines.join("\n"));
+    const phone="919510230798";
+    window.open(`https://wa.me/${phone}?text=${msg}`,'_blank');
   }
 
   const overlay = document.getElementById('overlay');
